@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:soar_task_app/src/core/dependency_injection/dependency_init.dart';
 import 'package:soar_task_app/src/core/environment/environment_configurations.dart';
+import 'package:soar_task_app/src/core/router/router_generator.dart';
 import 'package:soar_task_app/src/core/translations/codegen_loader.dart';
 import 'package:soar_task_app/src/core/utils/bloc_observer.dart';
 
@@ -79,6 +80,7 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
+        onGenerateRoute: RouterGenerator.onGenerateRoute,
       ),
     );
   }
