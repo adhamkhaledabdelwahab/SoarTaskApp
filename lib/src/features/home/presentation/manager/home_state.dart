@@ -10,6 +10,7 @@ class HomeState {
   final BaseResponseDataEntity<EventEntity>? eventsResponse;
   final BaseResponseDataEntity<SeriesEntity>? seriesResponse;
   final BaseResponseDataEntity<StoryEntity>? storiesResponse;
+  final CharactersUseCaseParams? params;
 
   const HomeState({
     this.action = HomeBlocActions.initial,
@@ -20,6 +21,7 @@ class HomeState {
     this.eventsResponse,
     this.seriesResponse,
     this.storiesResponse,
+    this.params,
   });
 
   @override
@@ -35,6 +37,7 @@ class HomeState {
     BaseResponseDataEntity<SeriesEntity>? seriesResponse,
     BaseResponseDataEntity<StoryEntity>? storiesResponse,
     bool isDetails = false,
+    CharactersUseCaseParams? params,
   }) {
     return HomeState(
       action: action,
@@ -45,6 +48,7 @@ class HomeState {
       eventsResponse: eventsResponse,
       seriesResponse: seriesResponse,
       storiesResponse: storiesResponse,
+      params: params ?? this.params,
     );
   }
 }

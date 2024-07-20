@@ -1,0 +1,45 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'characters_use_case_params.dart';
+
+// **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class CharactersUseCaseParamsAdapter
+    extends TypeAdapter<CharactersUseCaseParams> {
+  @override
+  final int typeId = 26;
+
+  @override
+  CharactersUseCaseParams read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return CharactersUseCaseParams(
+      limit: fields[0] as int,
+      offset: fields[1] as int,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, CharactersUseCaseParams obj) {
+    writer
+      ..writeByte(2)
+      ..writeByte(0)
+      ..write(obj.limit)
+      ..writeByte(1)
+      ..write(obj.offset);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CharactersUseCaseParamsAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}

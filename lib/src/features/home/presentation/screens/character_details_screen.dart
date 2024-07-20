@@ -2,9 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:soar_task_app/gen/assets.gen.dart';
 import 'package:soar_task_app/src/core/extensions/context.dart';
 import 'package:soar_task_app/src/features/home/presentation/manager/bloc_enums.dart';
 import 'package:soar_task_app/src/features/home/presentation/manager/home_bloc.dart';
+import 'package:soar_task_app/src/features/home/presentation/widgets/character_details_block_view.dart';
 
 class CharacterDetailsScreen extends StatelessWidget {
   const CharacterDetailsScreen({super.key});
@@ -44,8 +46,10 @@ class CharacterDetailsScreen extends StatelessWidget {
                         value: downloadProgress.progress,
                       ),
                     ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+                    errorWidget: (context, url, error) => Image.asset(
+                      Assets.images.imgMarvelEmpty.path,
+                      fit: BoxFit.fill,
+                    ),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -75,366 +79,86 @@ class CharacterDetailsScreen extends StatelessWidget {
                       SizedBox(
                         height: 10.h,
                       ),
+                      const Divider(),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       if (state.state == HomeBlocState.loading)
                         const Center(
                           child: CircularProgressIndicator(),
                         ),
                       if (state.comicsResponse != null) ...[
-                        Text(
-                          "Comics",
-                          style:
-                              Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                        CharacterDetailsBlockView(
+                          title: "Comics",
+                          listItemImage: (index) => state.comicsResponse!
+                              .results[index].thumbnail.imageUrl,
+                          listItemDetails: (index) =>
+                              state.comicsResponse!.results[index].description,
+                          listItemTitle: (index) =>
+                              state.comicsResponse!.results[index].title,
+                          listLength: state.comicsResponse!.results.length,
                         ),
                         SizedBox(
                           height: 10.h,
                         ),
-                        Wrap(
-                          spacing: 5.r,
-                          runSpacing: 5.r,
-                          children: List.generate(
-                            state.comicsResponse!.results.length,
-                            (index) => Card(
-                              color: Colors.grey.shade200,
-                              clipBehavior: Clip.antiAlias,
-                              child: SizedBox(
-                                width: 183.w,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CachedNetworkImage(
-                                      height: 200.h,
-                                      width: double.infinity,
-                                      imageUrl: state.comicsResponse!
-                                          .results[index].thumbnail.imageUrl,
-                                      progressIndicatorBuilder:
-                                          (context, url, downloadProgress) =>
-                                              Center(
-                                        child: CircularProgressIndicator(
-                                          value: downloadProgress.progress,
-                                        ),
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                      fit: BoxFit.fill,
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 8.w,
-                                      ),
-                                      child: Text(
-                                        state.comicsResponse!.results[index]
-                                            .title,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                    ),
-                                    if (state.comicsResponse!.results[index]
-                                        .description.isNotEmpty)
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 8.w,
-                                        ),
-                                        child: Text(
-                                          state.comicsResponse!.results[index]
-                                              .description,
-                                          maxLines: 2,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelMedium
-                                              ?.copyWith(
-                                                color: Colors.grey.shade700,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                        ),
-                                      ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
+                        const Divider(),
                       ],
                       SizedBox(
                         height: 10.h,
                       ),
                       if (state.eventsResponse != null) ...[
-                        Text(
-                          "Events",
-                          style:
-                              Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                        CharacterDetailsBlockView(
+                          title: "Events",
+                          listItemImage: (index) => state.eventsResponse!
+                              .results[index].thumbnail.imageUrl,
+                          listItemDetails: (index) =>
+                              state.eventsResponse!.results[index].description,
+                          listItemTitle: (index) =>
+                              state.eventsResponse!.results[index].title,
+                          listLength: state.eventsResponse!.results.length,
                         ),
                         SizedBox(
                           height: 10.h,
                         ),
-                        Wrap(
-                          spacing: 5.r,
-                          runSpacing: 5.r,
-                          children: List.generate(
-                            state.eventsResponse!.results.length,
-                            (index) => Card(
-                              color: Colors.grey.shade200,
-                              clipBehavior: Clip.antiAlias,
-                              child: SizedBox(
-                                width: 183.w,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CachedNetworkImage(
-                                      height: 200.h,
-                                      width: double.infinity,
-                                      imageUrl: state.eventsResponse!
-                                          .results[index].thumbnail.imageUrl,
-                                      progressIndicatorBuilder:
-                                          (context, url, downloadProgress) =>
-                                              Center(
-                                        child: CircularProgressIndicator(
-                                          value: downloadProgress.progress,
-                                        ),
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                      fit: BoxFit.fill,
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 8.w,
-                                      ),
-                                      child: Text(
-                                        state.eventsResponse!.results[index]
-                                            .title,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                    ),
-                                    if (state.eventsResponse!.results[index]
-                                        .description.isNotEmpty)
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 8.w,
-                                        ),
-                                        child: Text(
-                                          state.eventsResponse!.results[index]
-                                              .description,
-                                          maxLines: 2,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelMedium
-                                              ?.copyWith(
-                                                color: Colors.grey.shade700,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                        ),
-                                      ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
+                        const Divider(),
                       ],
                       SizedBox(
                         height: 10.h,
                       ),
                       if (state.storiesResponse != null) ...[
-                        Text(
-                          "Stories",
-                          style:
-                              Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                        CharacterDetailsBlockView(
+                          title: "Stories",
+                          listItemImage: (index) => state.storiesResponse!
+                              .results[index].thumbnail.imageUrl,
+                          listItemDetails: (index) =>
+                              state.storiesResponse!.results[index].description,
+                          listItemTitle: (index) =>
+                              state.storiesResponse!.results[index].title,
+                          listLength: state.storiesResponse!.results.length,
                         ),
                         SizedBox(
                           height: 10.h,
                         ),
-                        Wrap(
-                          spacing: 5.r,
-                          runSpacing: 5.r,
-                          children: List.generate(
-                            state.storiesResponse!.results.length,
-                            (index) => Card(
-                              color: Colors.grey.shade200,
-                              clipBehavior: Clip.antiAlias,
-                              child: SizedBox(
-                                width: 183.w,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CachedNetworkImage(
-                                      height: 200.h,
-                                      width: double.infinity,
-                                      imageUrl: state.storiesResponse!
-                                          .results[index].thumbnail.imageUrl,
-                                      progressIndicatorBuilder:
-                                          (context, url, downloadProgress) =>
-                                              Center(
-                                        child: CircularProgressIndicator(
-                                          value: downloadProgress.progress,
-                                        ),
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                      fit: BoxFit.fill,
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 8.w,
-                                      ),
-                                      child: Text(
-                                        state.storiesResponse!.results[index]
-                                            .title,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                    ),
-                                    if (state.storiesResponse!.results[index]
-                                        .description.isNotEmpty)
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 8.w,
-                                        ),
-                                        child: Text(
-                                          state.storiesResponse!.results[index]
-                                              .description,
-                                          maxLines: 2,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelMedium
-                                              ?.copyWith(
-                                                color: Colors.grey.shade700,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                        ),
-                                      ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
+                        const Divider(),
                       ],
                       SizedBox(
                         height: 10.h,
                       ),
                       if (state.seriesResponse != null) ...[
-                        Text(
-                          "Series",
-                          style:
-                              Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                        CharacterDetailsBlockView(
+                          title: "Series",
+                          listItemImage: (index) => state.seriesResponse!
+                              .results[index].thumbnail.imageUrl,
+                          listItemDetails: (index) =>
+                              state.seriesResponse!.results[index].description,
+                          listItemTitle: (index) =>
+                              state.seriesResponse!.results[index].title,
+                          listLength: state.seriesResponse!.results.length,
                         ),
                         SizedBox(
                           height: 10.h,
                         ),
-                        Wrap(
-                          spacing: 5.r,
-                          runSpacing: 5.r,
-                          children: List.generate(
-                            state.seriesResponse!.results.length,
-                            (index) => Card(
-                              color: Colors.grey.shade200,
-                              clipBehavior: Clip.antiAlias,
-                              child: SizedBox(
-                                width: 183.w,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CachedNetworkImage(
-                                      height: 200.h,
-                                      width: double.infinity,
-                                      imageUrl: state.seriesResponse!
-                                          .results[index].thumbnail.imageUrl,
-                                      progressIndicatorBuilder:
-                                          (context, url, downloadProgress) =>
-                                              Center(
-                                        child: CircularProgressIndicator(
-                                          value: downloadProgress.progress,
-                                        ),
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                      fit: BoxFit.fill,
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 8.w,
-                                      ),
-                                      child: Text(
-                                        state.seriesResponse!.results[index]
-                                            .title,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium
-                                            ?.copyWith(
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                    ),
-                                    if (state.seriesResponse!.results[index]
-                                        .description.isNotEmpty)
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 8.w,
-                                        ),
-                                        child: Text(
-                                          state.seriesResponse!.results[index]
-                                              .description,
-                                          maxLines: 2,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelMedium
-                                              ?.copyWith(
-                                                color: Colors.grey.shade700,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                        ),
-                                      ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
+                        const Divider(),
                       ],
                     ],
                   ),

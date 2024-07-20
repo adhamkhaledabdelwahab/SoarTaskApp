@@ -13,7 +13,9 @@ import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_c
 import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_events/get_character_events.dart';
 import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_series/get_character_series.dart';
 import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_stories/get_character_stories.dart';
+import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_use_case/character_use_case_params/characters_use_case_params.dart';
 import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_use_case/get_character_use_case.dart';
+import 'package:soar_task_app/src/features/home/domain/use_cases/get_characters_params_use_case/get_characters_params_use_case.dart';
 import 'package:soar_task_app/src/features/home/presentation/manager/bloc_enums.dart';
 
 part 'home_event.dart';
@@ -35,6 +37,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetCharacterSeriesUseCase _getCharacterSeriesUseCase =
       getIt<GetCharacterSeriesUseCase>();
 
+  final GetCharactersParamsUseCase _getCharactersParamsUseCase =
+      getIt<GetCharactersParamsUseCase>();
+
   static HomeBloc get(BuildContext context) => BlocProvider.of(context);
 
   HomeBloc() : super(const HomeState()) {
@@ -45,8 +50,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     switch (event.action) {
       case HomeBlocActions.getCharacters:
         await _getCharacters(event, emit);
+        break;
       case HomeBlocActions.characterDetails:
         await _characterDetails(event, emit);
+        break;
+      case HomeBlocActions.getCharactersParams:
+        await _charactersParams(event, emit);
+        break;
       default:
         break;
     }
@@ -81,6 +91,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           action: event.action,
           state: HomeBlocState.success,
           charactersResponse: charactersResponse ?? response.data,
+          params: event.charactersParams,
         ),
       );
     } else {
@@ -140,6 +151,36 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       );
       logError(
         "$runtimeType _characterDetails _getCharacterStoriesUseCase Error => ${response[3].error?.message}",
+      );
+      emit(
+        state.copyWith(
+          action: event.action,
+          state: HomeBlocState.error,
+          isDetails: true,
+        ),
+      );
+    }
+  }
+
+  Future _charactersParams(HomeEvent event, Emitter emit) async {
+    emit(
+      state.copyWith(
+        action: event.action,
+        state: HomeBlocState.loading,
+      ),
+    );
+    final result = await _getCharactersParamsUseCase.call();
+    if (result is DataSuccess) {
+      emit(
+        state.copyWith(
+          action: event.action,
+          state: HomeBlocState.success,
+          params: result.data,
+        ),
+      );
+    } else {
+      logError(
+        "$runtimeType _charactersParams Error => ${result.error?.message}",
       );
       emit(
         state.copyWith(

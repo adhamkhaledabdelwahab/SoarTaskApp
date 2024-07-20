@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:soar_task_app/src/core/extensions/context.dart';
 import 'package:soar_task_app/src/core/router/router_names.dart';
-import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_use_case/get_character_use_case.dart';
+import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_use_case/character_use_case_params/characters_use_case_params.dart';
 import 'package:soar_task_app/src/features/home/presentation/manager/bloc_enums.dart';
 import 'package:soar_task_app/src/features/home/presentation/manager/home_bloc.dart';
 import 'package:soar_task_app/src/features/home/presentation/widgets/home_grid_item_view.dart';
@@ -17,18 +17,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late CharactersParams _params;
   bool _requestCalled = false;
 
   @override
   void initState() {
-    _params = CharactersParams(
-      offset: 0,
-    );
-    HomeBloc.get(context).add(
+    final bloc = HomeBloc.get(context);
+    late CharactersUseCaseParams params;
+    if (bloc.state.params == null) {
+      params = CharactersUseCaseParams(
+        offset: 0,
+      );
+    } else {
+      params = bloc.state.params!;
+    }
+    bloc.add(
       HomeEvent(
         action: HomeBlocActions.getCharacters,
-        charactersParams: _params,
+        charactersParams: params,
       ),
     );
     super.initState();
@@ -70,13 +75,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             state.state != HomeBlocState.loading &&
                             !_requestCalled) {
                           _requestCalled = true;
-                          _params = _params.copyWith(
-                            offset: _params.offset + _params.limit,
+                          final params = state.params!.copyWith(
+                            offset: state.params!.offset + state.params!.limit,
                           );
                           HomeBloc.get(context).add(
                             HomeEvent(
                               action: HomeBlocActions.getCharacters,
-                              charactersParams: _params,
+                              charactersParams: params,
                             ),
                           );
                           return true;

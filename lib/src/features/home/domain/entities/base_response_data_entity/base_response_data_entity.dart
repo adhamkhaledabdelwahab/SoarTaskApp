@@ -7,6 +7,7 @@ class BaseResponseDataEntity<T> extends Equatable {
     required this.total,
     required this.count,
     required this.results,
+    required this.characterId,
   });
 
   final num offset;
@@ -14,14 +15,16 @@ class BaseResponseDataEntity<T> extends Equatable {
   final num total;
   final num count;
   final List<T> results;
+  final num? characterId;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         offset,
         limit,
         total,
         count,
         results,
+        characterId,
       ];
 
   BaseResponseDataEntity<T> copyWith({
@@ -30,6 +33,7 @@ class BaseResponseDataEntity<T> extends Equatable {
     num? total,
     num? count,
     List<T>? results,
+    num? characterId,
   }) {
     return BaseResponseDataEntity<T>(
       offset: offset ?? this.offset,
@@ -37,6 +41,7 @@ class BaseResponseDataEntity<T> extends Equatable {
       total: total ?? this.total,
       count: count ?? this.count,
       results: results ?? this.results,
+      characterId: characterId ?? this.characterId,
     );
   }
 }

@@ -5,11 +5,11 @@ import 'package:soar_task_app/src/features/home/domain/entities/comic_entity/com
 import 'package:soar_task_app/src/features/home/domain/entities/event_entity/event_entity.dart';
 import 'package:soar_task_app/src/features/home/domain/entities/series_entity/series_entity.dart';
 import 'package:soar_task_app/src/features/home/domain/entities/story_entity/story_entity.dart';
-import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_use_case/get_character_use_case.dart';
+import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_use_case/character_use_case_params/characters_use_case_params.dart';
 
 abstract class HomeRepository {
   Future<DataState<BaseResponseDataEntity<CharacterEntity>>> getCharacters({
-    required CharactersParams params,
+    required CharactersUseCaseParams params,
   });
 
   Future<DataState<BaseResponseDataEntity<ComicEntity>>> getCharacterComics({
@@ -27,4 +27,6 @@ abstract class HomeRepository {
   Future<DataState<BaseResponseDataEntity<StoryEntity>>> getCharacterStories({
     required num characterId,
   });
+
+  Future<DataState<CharactersUseCaseParams?>> getCharactersParams();
 }

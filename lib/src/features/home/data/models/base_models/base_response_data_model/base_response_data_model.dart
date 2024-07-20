@@ -39,13 +39,17 @@ class BaseResponseDataModel<T> extends Equatable {
   ) =>
       _$BaseResponseDataModelFromJson(json, create);
 
-  BaseResponseDataEntity<E> toEntity<E>(E Function(T) toEntity) =>
+  BaseResponseDataEntity<E> toEntity<E>(
+    E Function(T) toEntity,
+    num? characterId,
+  ) =>
       BaseResponseDataEntity<E>(
         offset: offset ?? 0,
         limit: limit ?? 0,
         total: total ?? 0,
         count: count ?? 0,
         results: results?.map((e) => toEntity(e)).toList() ?? [],
+        characterId: characterId,
       );
 
   @override

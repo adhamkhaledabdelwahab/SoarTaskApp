@@ -6,12 +6,12 @@ import 'package:soar_task_app/src/features/home/data/models/comic_model/comic_mo
 import 'package:soar_task_app/src/features/home/data/models/event_model/event_model.dart';
 import 'package:soar_task_app/src/features/home/data/models/series_model/series_model.dart';
 import 'package:soar_task_app/src/features/home/data/models/story_model/story_model.dart';
-import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_use_case/get_character_use_case.dart';
+import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_use_case/character_use_case_params/characters_use_case_params.dart';
 
-abstract class HomeDataSource {
+abstract class RemoteDataSource {
   Future<DataState<BaseResponseModel<BaseResponseDataModel<CharacterModel>>>>
       getCharacters({
-    required CharactersParams params,
+    required CharactersUseCaseParams params,
   });
 
   Future<DataState<BaseResponseModel<BaseResponseDataModel<ComicModel>>>>

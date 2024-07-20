@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:soar_task_app/src/core/network/data_state.dart';
 import 'package:soar_task_app/src/core/network/network_utils.dart';
-import 'package:soar_task_app/src/features/home/data/data_source/home_data_source.dart';
+import 'package:soar_task_app/src/features/home/data/data_source/remote/remote_data_source.dart';
 import 'package:soar_task_app/src/features/home/data/models/base_models/base_response_data_model/base_response_data_model.dart';
 import 'package:soar_task_app/src/features/home/data/models/base_models/base_response_model/base_response_model.dart';
 import 'package:soar_task_app/src/features/home/data/models/character_model/character_model.dart';
@@ -10,18 +10,18 @@ import 'package:soar_task_app/src/features/home/data/models/event_model/event_mo
 import 'package:soar_task_app/src/features/home/data/models/series_model/series_model.dart';
 import 'package:soar_task_app/src/features/home/data/models/story_model/story_model.dart';
 import 'package:soar_task_app/src/features/home/data/remote_service/remote_service.dart';
-import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_use_case/get_character_use_case.dart';
+import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_use_case/character_use_case_params/characters_use_case_params.dart';
 
-@Injectable(as: HomeDataSource)
-class HomeDataSourceImpl extends HomeDataSource {
+@Injectable(as: RemoteDataSource)
+class RemoteDataSourceImpl extends RemoteDataSource {
   final RemoteService _service;
 
-  HomeDataSourceImpl(this._service);
+  RemoteDataSourceImpl(this._service);
 
   @override
   Future<DataState<BaseResponseModel<BaseResponseDataModel<CharacterModel>>>>
       getCharacters({
-    required CharactersParams params,
+    required CharactersUseCaseParams params,
   }) {
     final NetworkUtils<BaseResponseModel<BaseResponseDataModel<CharacterModel>>>
         networkUtils = NetworkUtils();

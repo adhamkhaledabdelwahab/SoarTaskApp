@@ -4,41 +4,22 @@ import 'package:soar_task_app/src/core/usecase/usecase.dart';
 import 'package:soar_task_app/src/features/home/domain/entities/base_response_data_entity/base_response_data_entity.dart';
 import 'package:soar_task_app/src/features/home/domain/entities/character_entity/character_entity.dart';
 import 'package:soar_task_app/src/features/home/domain/repository/home_repository.dart';
+import 'package:soar_task_app/src/features/home/domain/use_cases/get_character_use_case/character_use_case_params/characters_use_case_params.dart';
 
 @Injectable()
 class GetCharactersUseCase
     implements
         UseCase<DataState<BaseResponseDataEntity<CharacterEntity>>,
-            CharactersParams> {
+            CharactersUseCaseParams> {
   final HomeRepository _homeRepository;
 
   GetCharactersUseCase(this._homeRepository);
 
   @override
   Future<DataState<BaseResponseDataEntity<CharacterEntity>>> call({
-    required CharactersParams params,
+    required CharactersUseCaseParams params,
   }) =>
       _homeRepository.getCharacters(
         params: params,
       );
-}
-
-class CharactersParams {
-  final int limit;
-  final int offset;
-
-  CharactersParams({
-    this.limit = 20,
-    required this.offset,
-  });
-
-  CharactersParams copyWith({
-    int? limit,
-    int? offset,
-  }) {
-    return CharactersParams(
-      limit: limit ?? this.limit,
-      offset: offset ?? this.offset,
-    );
-  }
 }

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:soar_task_app/gen/assets.gen.dart';
 import 'package:soar_task_app/src/features/home/domain/entities/character_entity/character_entity.dart';
 
 class HomeGridItemView extends StatelessWidget {
@@ -35,7 +36,10 @@ class HomeGridItemView extends StatelessWidget {
                     value: downloadProgress.progress,
                   ),
                 ),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+                errorWidget: (context, url, error) => Image.asset(
+                  Assets.images.imgMarvelEmpty.path,
+                  fit: BoxFit.fill,
+                ),
                 fit: BoxFit.fill,
               ),
             ),

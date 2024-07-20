@@ -9,4 +9,5 @@ enum HomeBlocActions {
   initial,
   getCharacters,
   characterDetails,
+  getCharactersParams,
 }
