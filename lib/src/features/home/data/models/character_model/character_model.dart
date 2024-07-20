@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:soar_task_app/src/features/home/data/models/comics_model/comics_model.dart';
-import 'package:soar_task_app/src/features/home/data/models/stories_model/stories_model.dart';
+import 'package:soar_task_app/src/features/home/data/models/character_model/comic_resource_model/comic_resource_model.dart';
+import 'package:soar_task_app/src/features/home/data/models/story_resource__model/story_resource_model.dart';
 import 'package:soar_task_app/src/features/home/data/models/thumnail_model/thumbnail_model.dart';
 import 'package:soar_task_app/src/features/home/data/models/url_model/url_model.dart';
 import 'package:soar_task_app/src/features/home/domain/entities/character_entity/character_entity.dart';
 
 part 'character_model.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: false, includeIfNull: true)
 class CharacterModel extends Equatable {
   const CharacterModel({
     required this.id,
@@ -43,16 +43,16 @@ class CharacterModel extends Equatable {
   final String? resourceUri;
   static const String resourceUriKey = "resourceURI";
 
-  final ComicsModel? comics;
+  final ComicResourceModel? comics;
   static const String comicsKey = "comics";
 
-  final ComicsModel? series;
+  final ComicResourceModel? series;
   static const String seriesKey = "series";
 
-  final StoriesModel? stories;
+  final StoryResourceModel? stories;
   static const String storiesKey = "stories";
 
-  final ComicsModel? events;
+  final ComicResourceModel? events;
   static const String eventsKey = "events";
 
   final List<UrlModel>? urls;
@@ -68,10 +68,10 @@ class CharacterModel extends Equatable {
         modified: modified ?? "",
         thumbnail: thumbnail?.toEntity ?? ThumbnailModel.empty().toEntity,
         resourceUri: resourceUri ?? "",
-        comics: comics?.toEntity ?? ComicsModel.empty().toEntity,
-        series: series?.toEntity ?? ComicsModel.empty().toEntity,
-        stories: stories?.toEntity ?? StoriesModel.empty().toEntity,
-        events: events?.toEntity ?? ComicsModel.empty().toEntity,
+        comics: comics?.toEntity ?? ComicResourceModel.empty().toEntity,
+        series: series?.toEntity ?? ComicResourceModel.empty().toEntity,
+        stories: stories?.toEntity ?? StoryResourceModel.empty().toEntity,
+        events: events?.toEntity ?? ComicResourceModel.empty().toEntity,
         urls: urls?.map((e) => e.toEntity).toList() ?? [],
       );
 

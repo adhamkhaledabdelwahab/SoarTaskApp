@@ -18,16 +18,17 @@ CharacterModel _$CharacterModelFromJson(Map<String, dynamic> json) =>
       resourceUri: json['resourceURI'] as String?,
       comics: json['comics'] == null
           ? null
-          : ComicsModel.fromJson(json['comics'] as Map<String, dynamic>),
+          : ComicResourceModel.fromJson(json['comics'] as Map<String, dynamic>),
       series: json['series'] == null
           ? null
-          : ComicsModel.fromJson(json['series'] as Map<String, dynamic>),
+          : ComicResourceModel.fromJson(json['series'] as Map<String, dynamic>),
       stories: json['stories'] == null
           ? null
-          : StoriesModel.fromJson(json['stories'] as Map<String, dynamic>),
+          : StoryResourceModel.fromJson(
+              json['stories'] as Map<String, dynamic>),
       events: json['events'] == null
           ? null
-          : ComicsModel.fromJson(json['events'] as Map<String, dynamic>),
+          : ComicResourceModel.fromJson(json['events'] as Map<String, dynamic>),
       urls: (json['urls'] as List<dynamic>?)
           ?.map((e) => UrlModel.fromJson(e as Map<String, dynamic>))
           .toList(),

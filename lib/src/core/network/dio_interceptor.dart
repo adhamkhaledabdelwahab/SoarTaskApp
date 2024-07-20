@@ -1,7 +1,20 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
+import 'package:soar_task_app/src/core/network/endpoints.dart';
 import 'package:soar_task_app/src/core/utils/log_util.dart';
 
 class DioInterceptor extends Interceptor {
+  String _apiKeyMD5(int ts) {
+    var bytes = utf8.encode(
+      "$ts${EndPoints.privateApikey}${EndPoints.publicApikey}",
+    ); // data being hashed
+
+    var digest = md5.convert(bytes);
+    return digest.toString();
+  }
+
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     logSuccess("onResponse Starts: ==========================================");
@@ -18,6 +31,10 @@ class DioInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    final ts = DateTime.now().millisecondsSinceEpoch;
+    options.queryParameters["apikey"] = EndPoints.publicApikey;
+    options.queryParameters["hash"] = _apiKeyMD5(ts);
+    options.queryParameters["ts"] = ts;
     logWarning(
       "onRequest Starts: ===========================================",
     );

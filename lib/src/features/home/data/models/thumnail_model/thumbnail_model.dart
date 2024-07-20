@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:soar_task_app/src/features/home/domain/entities/thumnail_entity/thumbnail_entity.dart';
+import 'package:soar_task_app/src/features/home/domain/entities/thumbnail_entity/thumbnail_entity.dart';
 
 part 'thumbnail_model.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: false, includeIfNull: true)
 class ThumbnailModel extends Equatable {
   const ThumbnailModel({
     required this.path,

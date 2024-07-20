@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:soar_task_app/src/features/home/domain/entities/comics_entity/comics_entity.dart';
-import 'package:soar_task_app/src/features/home/domain/entities/stories_entity/stories_entity.dart';
-import 'package:soar_task_app/src/features/home/domain/entities/thumnail_entity/thumbnail_entity.dart';
+import 'package:soar_task_app/src/features/home/domain/entities/comic_resource_entity/comic_resource_entity.dart';
+import 'package:soar_task_app/src/features/home/domain/entities/story_resource_entity/story_resource_entity.dart';
+import 'package:soar_task_app/src/features/home/domain/entities/thumbnail_entity/thumbnail_entity.dart';
 import 'package:soar_task_app/src/features/home/domain/entities/url_entity/url_entity.dart';
 
 class CharacterEntity extends Equatable {
@@ -25,14 +25,14 @@ class CharacterEntity extends Equatable {
   final String modified;
   final ThumbnailEntity thumbnail;
   final String resourceUri;
-  final ComicsEntity comics;
-  final ComicsEntity series;
-  final StoriesEntity stories;
-  final ComicsEntity events;
+  final ComicResourceEntity comics;
+  final ComicResourceEntity series;
+  final StoryResourceEntity stories;
+  final ComicResourceEntity events;
   final List<UrlEntity> urls;
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
         id,
         name,
         description,

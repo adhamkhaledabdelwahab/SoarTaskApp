@@ -4,7 +4,7 @@ import 'package:soar_task_app/src/features/home/domain/entities/url_entity/url_e
 
 part 'url_model.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: false, includeIfNull: true)
 class UrlModel extends Equatable {
   const UrlModel({
     required this.type,

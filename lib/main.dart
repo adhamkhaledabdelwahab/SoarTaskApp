@@ -10,6 +10,7 @@ import 'package:soar_task_app/src/core/environment/environment_configurations.da
 import 'package:soar_task_app/src/core/router/router_generator.dart';
 import 'package:soar_task_app/src/core/translations/codegen_loader.dart';
 import 'package:soar_task_app/src/core/utils/bloc_observer.dart';
+import 'package:soar_task_app/src/features/home/presentation/manager/home_bloc.dart';
 
 void main() {
   runZonedGuarded(
@@ -64,23 +65,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(412, 732),
-      splitScreenMode: true,
-      minTextAdapt: true,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.deepPurple,
+    return BlocProvider(
+      create: (context) => HomeBloc(),
+      child: ScreenUtilInit(
+        designSize: const Size(412, 732),
+        splitScreenMode: true,
+        minTextAdapt: true,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.deepPurple,
+            ),
+            useMaterial3: true,
           ),
-          useMaterial3: true,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          onGenerateRoute: RouterGenerator.onGenerateRoute,
         ),
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        onGenerateRoute: RouterGenerator.onGenerateRoute,
       ),
     );
   }
